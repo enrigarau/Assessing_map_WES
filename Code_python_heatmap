@@ -1,0 +1,16 @@
+import processing
+import os
+#defineix el directori
+folder="C:/++ELABORAZIONI_NUOVE/entrevistas/+++HEATMAP/"
+#captura els arxius en una llista
+filelist=os.listdir(folder)
+feedback = QgsProcessingFeedback()
+#recorre cada arxiu i si és un shape, executa el buffer.
+for file in filelist:
+    if file.endswith('.shp'):
+        layer=QgsVectorLayer(folder+file,file,'ogr')
+        file2 = file.replace(".shp","")
+        output=str(folder + "heatmap/hm_" + file2 + ".tif")
+        parameters={'INPUT':layer,'RADIUS':5000, 'PIXEL_SIZE':500, 'OUTPUT':output}
+    
+    processing.runAndLoadResults('qgis:heatmapkerneldensityestimation',parameters,feedback=feedback)
