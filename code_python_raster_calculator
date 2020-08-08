@@ -1,0 +1,43 @@
+import os
+import fnmatch
+import os
+import shutil
+#import lib.config as config
+import processing
+from osgeo import gdal 
+#from PyQt4.QtCore import QFileInfo
+from qgis.analysis import QgsRasterCalculator, QgsRasterCalculatorEntry
+
+inputFolder = "C:/++ELABORAZIONI_NUOVE/entrevistas/+++HEATMAP/hm_vul"
+outputfilename = "C:/++ELABORAZIONI_NUOVE/entrevistas/+++HEATMAP/calculos_raster/hotspot_vul_py2.tif"
+outputFolder="C:/++ELABORAZIONI_NUOVE/entrevistas/+++HEATMAP/calculos_raster"
+
+def findRasters(path, filter):
+    for root, dirs, files in os.walk(path, filter):
+        for file in fnmatch.filter(files, filter):
+            yield os.path.join(root, file)
+
+entries = []
+layers = []
+
+for l in findRasters(inputFolder, '*.tif'):
+    print (l)
+    fileInfo = QFileInfo(l)
+    baseName = fileInfo.baseName()
+    rlayer = QgsRasterLayer(l,baseName)
+    #QgsMapLayerRegistry.instance().addMapLayer(rlayer) 
+    layer = QgsRasterCalculatorEntry()
+    layer.ref = rlayer.name() + '@1'
+    layer.raster = rlayer
+    layers.append(rlayer)
+    layer.bandNumber = 1
+    print (layer)
+    entries.append(layer) 
+
+    reflist = " + ".join([ent.ref for ent in entries]) 
+    expression = '(' +  reflist + ')'
+    outuput = outputfilename
+    print (expression)
+
+    calc = QgsRasterCalculator(expression,outputfilename,'GTiff', layers[0].extent(), layers[0].width(), layers[0].height(), entries)
+    calc.processCalculation()
