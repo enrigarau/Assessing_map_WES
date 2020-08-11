@@ -1,0 +1,26 @@
+import os
+import shutil
+#import lib.config as config
+import processing
+from osgeo import gdal
+
+# Define variables
+ROOT_FOLDER = "C:/++ELABORAZIONI_NUOVE/entrevistas/+++HEATMAP/"
+LAYER_FOLDER = ROOT_FOLDER + os.sep + 'mask' + os.sep
+OUTPUT_FOLDER = ROOT_FOLDER + os.sep + 'resultados' + os.sep
+
+filelist=os.listdir(LAYER_FOLDER)
+
+#uri_comarca = '/home/josep/SIGTE/Enrica/base/comarca_alt_emporda.tif'
+#comarca = 'comarca_alt_emporda@1'
+
+uri_comarca_999 = "C:/++ELABORAZIONI_NUOVE/entrevistas/+++HEATMAP/comarca_999.tif"
+comarca_999 = 'comarca_999@1'
+
+for file in filelist:
+    if file.endswith('.tif'):
+        uri = LAYER_FOLDER + str(file)
+        nom = str(file.split(".")[0])+'@1'
+ 
+        sintax = { 'DATA_TYPE' : 5, 'INPUT' : [uri_comarca_999,uri], 'NODATA_INPUT' : None, 'NODATA_OUTPUT' : None, 'OPTIONS' : '', 'OUTPUT' : OUTPUT_FOLDER + file, 'PCT' : False, 'SEPARATE' : False }
+        processing.runAndLoadResults("gdal:merge", sintax)
