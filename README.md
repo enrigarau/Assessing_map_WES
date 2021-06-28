@@ -1,0 +1,2 @@
+# assessing_map_WES--> It contains two folders: (i) the interview template and supporting materials used during the interview with the stakeholders; (ii) the Python scripts used for the analysis of participative cartography data
+# See this research paper for more details: Garau, E., Vila-Subiros, J., Pueyo-Ros, J., Palom, A.R., 2020. Where do ecosystem services come from? Assessing and mapping stakeholder perceptions on water ecosystem services in the Muga river basin (Catalonia, Spain). Land 9, 1–21. https://doi.org/10.3390/land9100385 
