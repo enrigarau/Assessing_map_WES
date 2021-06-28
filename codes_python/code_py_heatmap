@@ -12,4 +12,4 @@ for file in filelist:
         file2 = file.replace(".shp","")
         output=str(folder + "heatmap/hm_" + file2 + ".tif")
         parameters={'INPUT':layer,'RADIUS':5000, 'PIXEL_SIZE':500, 'OUTPUT':output}
-    processing.runAndLoadResults('qgis:heatmapkerneldensityestimation',parameters,feedback=feedback)
+        processing.runAndLoadResults('qgis:heatmapkerneldensityestimation',parameters,feedback=feedback)
